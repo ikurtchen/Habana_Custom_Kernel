@@ -34,6 +34,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "gather_fwd_i32_test.hpp"
 #include "kl_div_all_test.hpp"
 #include "vector_add_v1_f32_gaudi2_test.hpp"
+#include "vector_add_v2_f32_gaudi2_test.hpp"
 
 int main(int argc, char** argv)
 {
@@ -79,7 +80,8 @@ int main(int argc, char** argv)
             "AvgPool2DFwdF32Gaudi2Test  Run AvgPool2DFwdF32Gaudi2Test only   " << std::endl <<
             "AvgPool2DBwdF32Gaudi2Test  Run AvgPool2DBwdF32Gaudi2Test only   " << std::endl <<
             "CastF16toI16Gaudi2Test     Run CastF16toI16Gaudi2Test only   " << std::endl <<
-            "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl;
+            "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl <<
+            "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl;
 
         exit(0);
     }
@@ -546,6 +548,23 @@ int main(int argc, char** argv)
         vectorAddV1F32Gaudi2ins.SetUp();
         result = vectorAddV1F32Gaudi2ins.runTest();
         vectorAddV1F32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
+
+    VectorAddV2F32Gaudi2Test vectorAddV2F32Gaudi2ins;
+    if(argc == 1 ||
+        (argc == 3 && (((strcmp(argv[1], "--device") ==0) || (strcmp(argv[1], "-d") ==0))
+        && (strcmp(argv[2],"Gaudi2") ==0)))  ||
+        (argc == 3 && (((strcmp(argv[1], "--test") ==0) || (strcmp(argv[1], "-t") ==0))
+        && (strcmp(argv[2],"VectorAddV2F32Gaudi2Test") ==0))))
+    {
+        vectorAddV2F32Gaudi2ins.SetUp();
+        result = vectorAddV2F32Gaudi2ins.runTest();
+        vectorAddV2F32Gaudi2ins.TearDown();
         testCount ++;
         if (result != 0)
         {
