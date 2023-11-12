@@ -39,6 +39,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "relu_all_gaudi2.hpp"
 #include "user_lut_gaudi2.hpp"
 #include "vector_add_v1_f32_gaudi2.hpp"
+#include "vector_add_v2_f32_gaudi2.hpp"
 
 #include "entry_points.hpp"
 #include <stdio.h>
@@ -146,6 +147,8 @@ tpc_lib_api::GlueCodeReturn GetKernelGuids( _IN_    tpc_lib_api::DeviceId       
            userLutInstance.GetKernelName(guids[GAUDI2_KERNEL_USER_LUT].name);
            VectorAddV1F32Gaudi2 vectoraddv1f32g2Instance;
            vectoraddv1f32g2Instance.GetKernelName(names[GAUDI2_KERNEL_VECTOR_ADD_V1_F32]);
+           VectorAddV2F32Gaudi2 vectoraddv2f32g2Instance;
+           vectoraddv2f32g2Instance.GetKernelName(names[GAUDI2_KERNEL_VECTOR_ADD_V2_F32]);
         }
 
         if (kernelCount != nullptr)
@@ -451,6 +454,13 @@ InstantiateTpcKernel(_IN_  tpc_lib_api::HabanaKernelParams* params,
     if (strcmp(params->nodeName, kernelName) == 0)
     {
         return vectoraddv1f32g2Instance.GetGcDefinitions(params, instance);
+    }
+
+    VectorAddV2F32Gaudi2 vectoraddv2f32g2Instance;
+    vectoraddv2f32g2Instance.GetKernelName(kernelName);
+    if (strcmp(params->nodeName, kernelName) == 0)
+    {
+        return vectoraddv2f32g2Instance.GetGcDefinitions(params, instance);
     }
 
     return tpc_lib_api::GLUE_NODE_NOT_FOUND;

@@ -16,7 +16,7 @@ public:
                                   gcapi::HabanaKernelParams_t* params,
                                   gcapi::HabanaKernelInstantiation_t* instance);
 
-     virtual gcapi::GlueCodeReturn_t GetKernelName(
+    virtual gcapi::GlueCodeReturn_t GetKernelName(
              char kernelName [gcapi::MAX_NODE_NAME]);
 
 private:

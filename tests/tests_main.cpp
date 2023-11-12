@@ -36,6 +36,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "kl_div_all_test.hpp"
 #include "user_lut_gaudi2_test.hpp"
 #include "vector_add_v1_f32_gaudi2_test.hpp"
+#include "vector_add_v2_f32_gaudi2_test.hpp"
 
 int check_arg(int argc, char** argv, const char* device, const char* test)
 {
@@ -104,6 +105,7 @@ int main(int argc, char** argv)
             "SoftMaxBF16Gaudi2Test      Run SoftMaxBF16Gaudi2Test only   " << std::endl <<
             "UserLutGaudi2Test          Run UserLutGaudi2Test only   " << std::endl;
             "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl;
+            "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl;
 
         exit(0);
     }
@@ -492,6 +494,19 @@ int main(int argc, char** argv)
         vectorAddV1F32Gaudi2ins.SetUp();
         result = vectorAddV1F32Gaudi2ins.runTest();
         vectorAddV1F32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
+
+    if(check_arg(argc, argv, "Gaudi2", "VectorAddV2F32Gaudi2Test"))
+    {
+        VectorAddV2F32Gaudi2Test vectorAddV2F32Gaudi2ins;
+        vectorAddV2F32Gaudi2ins.SetUp();
+        result = vectorAddV2F32Gaudi2ins.runTest();
+        vectorAddV2F32Gaudi2ins.TearDown();
         testCount ++;
         if (result != 0)
         {

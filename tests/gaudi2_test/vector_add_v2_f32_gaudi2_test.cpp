@@ -14,10 +14,10 @@ OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY TH
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************/
 
-#include "vector_add_v1_f32_gaudi2_test.hpp"
+#include "vector_add_v2_f32_gaudi2_test.hpp"
 #include "entry_points.hpp"
 
-void VectorAddV1F32Gaudi2Test::vector_add_f32_ref(
+void VectorAddV2F32Gaudi2Test::vector_add_f32_ref(
          const test::Tensor<float,1>& input0,
          const test::Tensor<float,1>& input1,
          test::Tensor<float,1>& output)
@@ -33,7 +33,7 @@ void VectorAddV1F32Gaudi2Test::vector_add_f32_ref(
     }
 }
 
-int VectorAddV1F32Gaudi2Test::runTest()
+int VectorAddV2F32Gaudi2Test::runTest()
 {
     const int vector_size = 1024;
     float_1DTensor input0({vector_size});
@@ -72,7 +72,11 @@ int VectorAddV1F32Gaudi2Test::runTest()
         return -1;
     }
 
-    strcpy(m_in_defs.nodeName, kernelNames[GAUDI2_KERNEL_VECTOR_ADD_V1_F32]);
+    VectorAddV2F32Gaudi2::VectorAddV2Param def;
+    def.partitionStep = (vector_size + (64 - 1)) / 64 / 8;
+    m_in_defs.NodeParams = &def;
+
+    strcpy(m_in_defs.nodeName, kernelNames[GAUDI2_KERNEL_VECTOR_ADD_V2_F32]);
     result  = HabanaKernel(&m_in_defs,&m_out_defs);
     if (result != gcapi::GLUE_SUCCESS)
     {
@@ -97,11 +101,11 @@ int VectorAddV1F32Gaudi2Test::runTest()
     {
         if (abs(output.Data()[element] - output_ref.Data()[element]) > 1e-6)
         {
-            std::cout << "Vector Add V1 F32 test failed!!" << std::endl;
+            std::cout << "Vector Add V2 F32 test failed!!" << std::endl;
             return -1;
         }
     }
-    std::cout << "Vector Add V1 F32 test pass!!" << std::endl;
+    std::cout << "Vector Add V2 F32 test pass!!" << std::endl;
     return 0;
 }
 
