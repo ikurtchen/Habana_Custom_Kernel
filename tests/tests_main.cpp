@@ -37,6 +37,8 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "user_lut_gaudi2_test.hpp"
 #include "vector_add_v1_f32_gaudi2_test.hpp"
 #include "vector_add_v2_f32_gaudi2_test.hpp"
+#include "matrix_add_v1_f32_gaudi2_test.hpp"
+#include "matrix_add_v2_f32_gaudi2_test.hpp"
 
 int check_arg(int argc, char** argv, const char* device, const char* test)
 {
@@ -104,8 +106,10 @@ int main(int argc, char** argv)
             "CastF16toI16Gaudi2Test     Run CastF16toI16Gaudi2Test only   " << std::endl <<
             "SoftMaxBF16Gaudi2Test      Run SoftMaxBF16Gaudi2Test only   " << std::endl <<
             "UserLutGaudi2Test          Run UserLutGaudi2Test only   " << std::endl;
-            "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl;
-            "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl;
+            "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl <<
+            "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl <<
+            "MatrixAddV1F32Gaudi2Test   Run MatrixAddV1F32Gaudi2Test only   " << std::endl <<
+            "MatrixAddV2F32Gaudi2Test   Run MatrixAddV2F32Gaudi2Test only   " << std::endl;
 
         exit(0);
     }
@@ -514,6 +518,31 @@ int main(int argc, char** argv)
         }
     }
 
+    if(check_arg(argc, argv, "Gaudi2", "MatrixAddV1F32Gaudi2Test"))
+    {
+        MatrixAddV1F32Gaudi2Test matrixAddV1F32Gaudi2ins;
+        matrixAddV1F32Gaudi2ins.SetUp();
+        result = matrixAddV1F32Gaudi2ins.runTest();
+        matrixAddV1F32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
+
+    if(check_arg(argc, argv, "Gaudi2", "MatrixAddV2F32Gaudi2Test"))
+    {
+        MatrixAddV2F32Gaudi2Test matrixAddV2F32Gaudi2ins;
+        matrixAddV2F32Gaudi2ins.SetUp();
+        result = matrixAddV2F32Gaudi2ins.runTest();
+        matrixAddV2F32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
     if(testCount > 0)
         std::cout << "All " << testCount  <<" tests pass!" <<std::endl;
     else
