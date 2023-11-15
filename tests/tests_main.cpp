@@ -35,6 +35,8 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "kl_div_all_test.hpp"
 #include "vector_add_v1_f32_gaudi2_test.hpp"
 #include "vector_add_v2_f32_gaudi2_test.hpp"
+#include "matrix_add_v1_f32_gaudi2_test.hpp"
+#include "matrix_add_v2_f32_gaudi2_test.hpp"
 
 int main(int argc, char** argv)
 {
@@ -81,7 +83,9 @@ int main(int argc, char** argv)
             "AvgPool2DBwdF32Gaudi2Test  Run AvgPool2DBwdF32Gaudi2Test only   " << std::endl <<
             "CastF16toI16Gaudi2Test     Run CastF16toI16Gaudi2Test only   " << std::endl <<
             "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl <<
-            "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl;
+            "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl <<
+            "MatrixAddV1F32Gaudi2Test   Run MatrixAddV1F32Gaudi2Test only   " << std::endl <<
+            "MatrixAddV2F32Gaudi2Test   Run MatrixAddV2F32Gaudi2Test only   " << std::endl;
 
         exit(0);
     }
@@ -565,6 +569,40 @@ int main(int argc, char** argv)
         vectorAddV2F32Gaudi2ins.SetUp();
         result = vectorAddV2F32Gaudi2ins.runTest();
         vectorAddV2F32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
+
+    MatrixAddV1F32Gaudi2Test matrixAddV1F32Gaudi2ins;
+    if(argc == 1 ||
+        (argc == 3 && (((strcmp(argv[1], "--device") ==0) || (strcmp(argv[1], "-d") ==0))
+        && (strcmp(argv[2],"Gaudi2") ==0)))  ||
+        (argc == 3 && (((strcmp(argv[1], "--test") ==0) || (strcmp(argv[1], "-t") ==0))
+        && (strcmp(argv[2],"MatrixAddV1F32Gaudi2Test") ==0))))
+    {
+        matrixAddV1F32Gaudi2ins.SetUp();
+        result = matrixAddV1F32Gaudi2ins.runTest();
+        matrixAddV1F32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
+
+    MatrixAddV2F32Gaudi2Test matrixAddV2F32Gaudi2ins;
+    if(argc == 1 ||
+        (argc == 3 && (((strcmp(argv[1], "--device") ==0) || (strcmp(argv[1], "-d") ==0))
+        && (strcmp(argv[2],"Gaudi2") ==0)))  ||
+        (argc == 3 && (((strcmp(argv[1], "--test") ==0) || (strcmp(argv[1], "-t") ==0))
+        && (strcmp(argv[2],"MatrixAddV2F32Gaudi2Test") ==0))))
+    {
+        matrixAddV2F32Gaudi2ins.SetUp();
+        result = matrixAddV2F32Gaudi2ins.runTest();
+        matrixAddV2F32Gaudi2ins.TearDown();
         testCount ++;
         if (result != 0)
         {

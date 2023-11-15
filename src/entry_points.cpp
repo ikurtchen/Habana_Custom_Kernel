@@ -37,6 +37,8 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "kl_div_all.hpp"
 #include "vector_add_v1_f32_gaudi2.hpp"
 #include "vector_add_v2_f32_gaudi2.hpp"
+#include "matrix_add_v1_f32_gaudi2.hpp"
+#include "matrix_add_v2_f32_gaudi2.hpp"
 
 extern "C"
 {
@@ -128,6 +130,10 @@ gcapi::GlueCodeReturn_t GetKernelNames(_OUT_ char**         names,
            vectoraddv1f32g2Instance.GetKernelName(names[GAUDI2_KERNEL_VECTOR_ADD_V1_F32]);
            VectorAddV2F32Gaudi2 vectoraddv2f32g2Instance;
            vectoraddv2f32g2Instance.GetKernelName(names[GAUDI2_KERNEL_VECTOR_ADD_V2_F32]);
+           MatrixAddV1F32Gaudi2 matrixaddv1f32g2Instance;
+           matrixaddv1f32g2Instance.GetKernelName(names[GAUDI2_KERNEL_MATRIX_ADD_V1_F32]);
+           MatrixAddV2F32Gaudi2 matrixaddv2f32g2Instance;
+           matrixaddv2f32g2Instance.GetKernelName(names[GAUDI2_KERNEL_MATRIX_ADD_V2_F32]);
         }
 
         if (kernelCount != nullptr)
@@ -389,6 +395,20 @@ HabanaKernel(_IN_  gcapi::HabanaKernelParams_t* params,
     if (strcmp(params->nodeName, kernelName) == 0)
     {
         return vectoraddv2f32g2Instance.GetGcDefinitions(params, instance);
+    }
+
+    MatrixAddV1F32Gaudi2 matrixaddv1f32g2Instance;
+    matrixaddv1f32g2Instance.GetKernelName(kernelName);
+    if (strcmp(params->nodeName, kernelName) == 0)
+    {
+        return matrixaddv1f32g2Instance.GetGcDefinitions(params, instance);
+    }
+
+    MatrixAddV2F32Gaudi2 matrixaddv2f32g2Instance;
+    matrixaddv2f32g2Instance.GetKernelName(kernelName);
+    if (strcmp(params->nodeName, kernelName) == 0)
+    {
+        return matrixaddv2f32g2Instance.GetGcDefinitions(params, instance);
     }
 
     return gcapi::GLUE_NODE_NOT_FOUND;
