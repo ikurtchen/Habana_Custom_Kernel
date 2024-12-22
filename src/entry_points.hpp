@@ -18,6 +18,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #define _ENTRY_POINTS_HPP_
 
 #include <gc_interface.h>
+#include <tpc_kernel_lib_interface.h>
 
 extern "C"
 {

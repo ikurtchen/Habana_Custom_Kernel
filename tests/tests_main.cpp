@@ -105,7 +105,7 @@ int main(int argc, char** argv)
             "AvgPool2DBwdF32Gaudi2Test  Run AvgPool2DBwdF32Gaudi2Test only   " << std::endl <<
             "CastF16toI16Gaudi2Test     Run CastF16toI16Gaudi2Test only   " << std::endl <<
             "SoftMaxBF16Gaudi2Test      Run SoftMaxBF16Gaudi2Test only   " << std::endl <<
-            "UserLutGaudi2Test          Run UserLutGaudi2Test only   " << std::endl;
+            "UserLutGaudi2Test          Run UserLutGaudi2Test only   " << std::endl <<
             "VectorAddV1F32Gaudi2Test   Run VectorAddV1F32Gaudi2Test only   " << std::endl <<
             "VectorAddV2F32Gaudi2Test   Run VectorAddV2F32Gaudi2Test only   " << std::endl <<
             "MatrixAddV1F32Gaudi2Test   Run MatrixAddV1F32Gaudi2Test only   " << std::endl <<

@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <cstring>
-#include <gc_interface.h>
+
+#include "gc_interface.h"
+#include "tpc_kernel_lib_interface.h"
 
 class VectorAddV1F32Gaudi2
 {
@@ -12,12 +14,12 @@ public:
     VectorAddV1F32Gaudi2() {}
     virtual ~VectorAddV1F32Gaudi2() {}
 
-    virtual gcapi::GlueCodeReturn_t GetGcDefinitions(
-                                  gcapi::HabanaKernelParams_t* params,
-                                  gcapi::HabanaKernelInstantiation_t* instance);
+    virtual tpc_lib_api::GlueCodeReturn GetGcDefinitions(
+            tpc_lib_api::HabanaKernelParams* params,
+            tpc_lib_api::HabanaKernelInstantiation* kernel);
 
-    virtual gcapi::GlueCodeReturn_t GetKernelName(
-             char kernelName [gcapi::MAX_NODE_NAME]);
+    virtual tpc_lib_api::GlueCodeReturn GetKernelName(
+            char kernelName [tpc_lib_api::MAX_NODE_NAME]);
 
 private:
     VectorAddV1F32Gaudi2(const VectorAddV1F32Gaudi2& other) = delete;

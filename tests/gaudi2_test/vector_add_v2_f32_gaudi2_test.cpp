@@ -47,7 +47,7 @@ int VectorAddV2F32Gaudi2Test::runTest()
     vector_add_f32_ref(input0, input1, output_ref);
 
     // generate input for query call
-    m_in_defs.deviceId = gcapi::DEVICE_ID_GAUDI2;
+    m_in_defs.deviceId = tpc_lib_api::DEVICE_ID_GAUDI2;
 
     m_in_defs.inputTensorNr = 2;
     LoadTensorToGcDescriptor(&(m_in_defs.inputTensors[0]), input0);
@@ -56,43 +56,39 @@ int VectorAddV2F32Gaudi2Test::runTest()
     m_in_defs.outputTensorNr = 1;
     LoadTensorToGcDescriptor(&(m_in_defs.outputTensors[0]), output);
 
-    char**   kernelNames = nullptr;
+    tpc_lib_api::GuidInfo *guids = nullptr;
     unsigned kernelCount = 0;
-    gcapi::GlueCodeReturn_t result = GetKernelNames(kernelNames, &kernelCount, gcapi::DEVICE_ID_GAUDI2);
-    kernelNames = new char*[kernelCount];
-    for (unsigned i = 0; i < kernelCount; i++)
-    {
-        kernelNames[i] = new char[gcapi::MAX_NODE_NAME];
-    }
-    result = GetKernelNames(kernelNames, &kernelCount, gcapi::DEVICE_ID_GAUDI2);
-    if (result != gcapi::GLUE_SUCCESS)
+    tpc_lib_api::GlueCodeReturn result = GetKernelGuids(tpc_lib_api::DEVICE_ID_GAUDI2, &kernelCount, guids);
+    guids = new tpc_lib_api::GuidInfo[kernelCount];
+    result = GetKernelGuids(tpc_lib_api::DEVICE_ID_GAUDI2, &kernelCount, guids);
+    if (result != tpc_lib_api::GLUE_SUCCESS)
     {
         std::cout << "Can't get kernel name!! " << result << std::endl;
-        ReleaseKernelNames(kernelNames, kernelCount);
+        ReleaseKernelNames(guids, kernelCount);
         return -1;
     }
+
+    strcpy(m_in_defs.guid.name, guids[GAUDI2_KERNEL_VECTOR_ADD_V2_F32].name);
 
     VectorAddV2F32Gaudi2::VectorAddV2Param def;
     def.partitionStep = (vector_size + (64 - 1)) / 64 / 8;
-    m_in_defs.NodeParams = &def;
+    m_in_defs.nodeParams.nodeParams = &def;
 
-    strcpy(m_in_defs.nodeName, kernelNames[GAUDI2_KERNEL_VECTOR_ADD_V2_F32]);
-    result  = HabanaKernel(&m_in_defs,&m_out_defs);
-    if (result != gcapi::GLUE_SUCCESS)
+    result  = InstantiateTpcKernel(&m_in_defs,&m_out_defs);
+    if (result != tpc_lib_api::GLUE_SUCCESS)
     {
         std::cout << "Glue test failed, can't load kernel " << result << std::endl;
-        ReleaseKernelNames(kernelNames, kernelCount);
+        ReleaseKernelNames(guids, kernelCount);
         return -1;
     }
-
     // generate and load tensor descriptors
-    std::vector<TensorDesc> vec;
+    std::vector<TensorDesc2> vec;
     vec.push_back(input0.GetTensorDescriptor());
     vec.push_back(input1.GetTensorDescriptor());
     vec.push_back(output.GetTensorDescriptor());
     // execute a simulation of the kernel using TPC simulator,
     TestBase::RunSimulation(vec, m_in_defs, m_out_defs);
-    ReleaseKernelNames(kernelNames, kernelCount);
+    ReleaseKernelNames(guids, kernelCount);
     input0.Print(0);
     input1.Print(0);
     output.Print(0);
