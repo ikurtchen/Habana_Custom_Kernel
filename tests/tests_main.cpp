@@ -39,6 +39,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "vector_add_v2_f32_gaudi2_test.hpp"
 #include "matrix_add_v1_f32_gaudi2_test.hpp"
 #include "matrix_add_v2_f32_gaudi2_test.hpp"
+#include "bincount_stage1_i32_gaudi2_test.hpp"
 
 int check_arg(int argc, char** argv, const char* device, const char* test)
 {
@@ -543,6 +544,20 @@ int main(int argc, char** argv)
             return result;
         }
     }
+
+    if(check_arg(argc, argv, "Gaudi2", "BincountStage1I32Gaudi2Test"))
+    {
+        BincountStage1I32Gaudi2Test bincountStage1I32Gaudi2ins;
+        bincountStage1I32Gaudi2ins.SetUp();
+        result = bincountStage1I32Gaudi2ins.runTest();
+        bincountStage1I32Gaudi2ins.TearDown();
+        testCount ++;
+        if (result != 0)
+        {
+            return result;
+        }
+    }
+
     if(testCount > 0)
         std::cout << "All " << testCount  <<" tests pass!" <<std::endl;
     else

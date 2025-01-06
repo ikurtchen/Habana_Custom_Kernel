@@ -42,6 +42,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVE
 #include "vector_add_v2_f32_gaudi2.hpp"
 #include "matrix_add_v1_f32_gaudi2.hpp"
 #include "matrix_add_v2_f32_gaudi2.hpp"
+#include "bincount_stage1_i32_gaudi2.hpp"
 
 #include "entry_points.hpp"
 #include <stdio.h>
@@ -155,6 +156,8 @@ tpc_lib_api::GlueCodeReturn GetKernelGuids( _IN_    tpc_lib_api::DeviceId       
            matrixaddv1f32g2Instance.GetKernelName(guids[GAUDI2_KERNEL_MATRIX_ADD_V1_F32].name);
            MatrixAddV2F32Gaudi2 matrixaddv2f32g2Instance;
            matrixaddv2f32g2Instance.GetKernelName(guids[GAUDI2_KERNEL_MATRIX_ADD_V2_F32].name);
+           BincountStage1I32Gaudi2 bincountstage1i32g2Instance;
+           bincountstage1i32g2Instance.GetKernelName(guids[GAUDI2_KERNEL_BINCOUNT_STAGE1_I32].name);
         }
 
         if (kernelCount != nullptr)
@@ -481,6 +484,13 @@ InstantiateTpcKernel(_IN_  tpc_lib_api::HabanaKernelParams* params,
     if (strcmp(params->guid.name, kernelName) == 0)
     {
         return matrixaddv2f32g2Instance.GetGcDefinitions(params, instance);
+    }
+
+    BincountStage1I32Gaudi2 bincountstage1i32g2Instance;
+    bincountstage1i32g2Instance.GetKernelName(kernelName);
+    if (strcmp(params->guid.name, kernelName) == 0)
+    {
+        return bincountstage1i32g2Instance.GetGcDefinitions(params, instance);
     }
 
     return tpc_lib_api::GLUE_NODE_NOT_FOUND;

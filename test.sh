@@ -11,8 +11,9 @@ GDB=""
 TEST_DEVICE="Gaudi2"
 #TEST_KERNEL="VectorAddV1F32Gaudi2Test"
 #TEST_KERNEL="VectorAddV2F32Gaudi2Test"
-TEST_KERNEL="MatrixAddV1F32Gaudi2Test"
+#TEST_KERNEL="MatrixAddV1F32Gaudi2Test"
 #TEST_KERNEL="MatrixAddV2F32Gaudi2Test"
+TEST_KERNEL="BincountStage1I32Gaudi2Test"
 
 #export TPC_RUNNER=1
 
