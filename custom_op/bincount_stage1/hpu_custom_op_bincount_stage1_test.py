@@ -5,10 +5,10 @@ def test_custom_bincount_stage1_op_function(custom_op_lib_path):
     torch.ops.load_library(custom_op_lib_path)
     print(torch.ops.custom_op.custom_bincount_stage1)
 
-    experts = 8
-    topk = 2
-    partitions = 4
-    seq_len = 4
+    experts = 64 #8
+    topk = 8 #2
+    partitions = 16 #4
+    seq_len = 16384 #4
     bins = experts
     input_size = seq_len * topk # b*s*topk
     partition_size = input_size // partitions;
