@@ -33,10 +33,10 @@ tpc_lib_api::GlueCodeReturn BincountStage1I32Gaudi2::GetGcDefinitions(
     }
 
     //validate tensor dimensions
-    if (params->inputTensors[0].geometry.maxSizes[0] % userParams->partitions != 0)
-    {
-        return tpc_lib_api::GLUE_INCOMPATIBLE_INPUT_SIZE;
-    }
+    //if (params->inputTensors[0].geometry.maxSizes[0] % userParams->partitions != 0)
+    //{
+    //    return tpc_lib_api::GLUE_INCOMPATIBLE_INPUT_SIZE;
+    //}
     if (params->outputTensors[0].geometry.maxSizes[0] != userParams->partitions
             || params->outputTensors[0].geometry.maxSizes[1] != userParams->bins)
     {
@@ -58,7 +58,7 @@ tpc_lib_api::GlueCodeReturn BincountStage1I32Gaudi2::GetGcDefinitions(
     **************************************************************************************/
     if (userParams->partition_size == 0)
     {
-        userParams->partition_size = params->inputTensors[0].geometry.maxSizes[0] / userParams->partitions;
+        userParams->partition_size = (params->inputTensors[0].geometry.maxSizes[0] + userParams->partitions -1) / userParams->partitions;
     }
 
     kernel->indexSpaceRank = 1;

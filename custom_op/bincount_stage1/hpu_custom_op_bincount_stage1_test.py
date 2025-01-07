@@ -7,11 +7,11 @@ def test_custom_bincount_stage1_op_function(custom_op_lib_path):
 
     experts = 64 #8
     topk = 8 #2
-    partitions = 16 #4
+    partitions = 24 #4
     seq_len = 16384 #4
     bins = experts
     input_size = seq_len * topk # b*s*topk
-    partition_size = input_size // partitions;
+    partition_size = (input_size + partitions - 1) // partitions;
 
     input_cpu = torch.randint(0, experts, (seq_len, topk), dtype=torch.int32)
     input_hpu = input_cpu.to('hpu')

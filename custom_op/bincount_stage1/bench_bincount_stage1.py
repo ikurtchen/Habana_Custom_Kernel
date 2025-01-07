@@ -10,10 +10,10 @@ enable_profile = False
 seq_len = 16384
 experts = 64
 topk = 8
-partitions = 16
+partitions = 24
 bins = experts
 input_size = seq_len * topk # b*s*topk
-partition_size = input_size // partitions;
+partition_size = (input_size + partitions - 1) // partitions;
 num_iterations = 100
 
 custom_op_lib_path = sys.argv[1]

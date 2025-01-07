@@ -39,13 +39,13 @@ void BincountStage1I32Gaudi2Test::bincount_stage1_i32_ref(
 
 int BincountStage1I32Gaudi2Test::runTest()
 {
-    const unsigned int experts = 8;
-    const unsigned int topk = 2;
-    const unsigned int partitions = 4;
-    const unsigned int seq_len = 4;
+    const unsigned int experts = 8; //64; //8
+    const unsigned int topk = 2; //8; //2
+    const unsigned int partitions = 4; //24; //6, 4
+    const unsigned int seq_len = 8; //16384; //8
     const unsigned int bins = experts;
     const unsigned int input_size = seq_len * topk; // b*s*topk
-    const unsigned int partition_size = input_size / partitions;
+    const unsigned int partition_size = (input_size + partitions - 1) / partitions;
 
     int32_1DTensor input({input_size});
     input.InitRand(0, experts - 1);
